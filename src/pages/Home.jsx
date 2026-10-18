@@ -1,26 +1,48 @@
-import Hero from '../components/Hero.jsx'
-import Card from '../components/Card.jsx'
+import GameCard from '../components/GameCard.jsx'
+import StudySpace from '../components/StudySpace.jsx'
+import ThemePreviewCard from '../components/ThemePreviewCard.jsx'
+import { useThemePreferences } from '../context/ThemeContext.jsx'
+import { GAMES } from '../games/catalog.js'
+import { THEMES } from '../theme/themes.js'
 
 function Home({ onNavigate }) {
+  const { theme, setTheme } = useThemePreferences()
+
   return (
-    <>
-      <Hero
+    <div className="mx-auto max-w-5xl space-y-10 px-4 py-6 sm:px-6">
+      <StudySpace
         onQuickReset={() => onNavigate('Games')}
-        onStartStudying={() => onNavigate('Study Quest')}
+        onSkipToStudy={() => onNavigate('Study Quest')}
       />
 
-      <section className="mx-auto grid max-w-5xl gap-3 px-4 pb-10 sm:grid-cols-3 sm:px-6">
-        <Card title="Quick Reset" icon="🌿" className="py-4">
-          A 2-minute mini-game to calm a racing mind before you dive in.
-        </Card>
-        <Card title="Study Quest" icon="📖" className="py-4">
-          Turn your to-do list into bite-sized quests with built-in breaks.
-        </Card>
-        <Card title="Settings" icon="⚙️" className="py-4">
-          Pick a cozy theme, a comfy font, and a pace that feels like you.
-        </Card>
+      <section aria-labelledby="home-games">
+        <h2 id="home-games" className="font-heading mb-3 text-xl font-extrabold text-[var(--color-text)]">
+          Pick a game
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {GAMES.map((game) => (
+            <GameCard key={game.id} game={game} onPlay={() => onNavigate('Games')} />
+          ))}
+        </div>
       </section>
-    </>
+
+      <section aria-labelledby="home-themes">
+        <h2 id="home-themes" className="font-heading mb-3 text-xl font-extrabold text-[var(--color-text)]">
+          Pick your vibe
+        </h2>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+          {THEMES.map((option) => (
+            <ThemePreviewCard
+              key={option.id}
+              compact
+              themeTheme={option}
+              isActive={theme === option.id}
+              onSelect={setTheme}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
   )
 }
 

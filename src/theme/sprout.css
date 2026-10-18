@@ -1,0 +1,219 @@
+/*
+ * Sprout Garden — nine-slice and sprite styling for the Sprout Lands UI pack.
+ * Everything here is scoped under :root[data-theme="sprout"], so no other
+ * theme can pick up this artwork. Art is drawn at an integer scale
+ * (--sg) with image-rendering: pixelated to keep every pixel sharp.
+ *
+ * Slice numbers are in source-image pixels; border widths are slice * --sg.
+ */
+
+@font-face {
+  font-family: 'Sprout Pixel';
+  src: url('/assets/sprout-garden/pixel-font.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root[data-theme="sprout"] {
+  --sg: 2;
+}
+
+/* Meadow background: a tiny pixel grass tuft pattern. */
+:root[data-theme="sprout"] body {
+  background-color: #a9c779;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='%2399b96b'%3E%3Crect x='8' y='10' width='4' height='4'/%3E%3Crect x='12' y='6' width='4' height='4'/%3E%3Crect x='40' y='38' width='4' height='4'/%3E%3Crect x='44' y='34' width='4' height='4'/%3E%3C/g%3E%3Cg fill='%23c6dc92'%3E%3Crect x='46' y='12' width='4' height='4'/%3E%3Crect x='18' y='44' width='4' height='4'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 64px 64px;
+  image-rendering: pixelated;
+  cursor: url('/assets/sprout-garden/catpaw-mouse-icon.png') 4 2, auto;
+}
+
+:root[data-theme="sprout"] h1,
+:root[data-theme="sprout"] h2,
+:root[data-theme="sprout"] .font-heading {
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Shared nine-slice plumbing ---------- */
+:root[data-theme="sprout"] .sg-panel,
+:root[data-theme="sprout"] .sg-card,
+:root[data-theme="sprout"] .sg-button,
+:root[data-theme="sprout"] .sg-tab,
+:root[data-theme="sprout"] .sg-cell {
+  border-style: solid;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  image-rendering: pixelated;
+  border-image-repeat: stretch;
+  color: var(--color-text);
+}
+
+/* Large tan wooden menu panel (Setting menu.png, blank half). */
+:root[data-theme="sprout"] .sg-panel {
+  border-width: calc(8px * var(--sg));
+  border-image-source: url('/assets/sprout-garden/panel.png');
+  border-image-slice: 8 fill;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Cream block used for cards and bubbles. */
+:root[data-theme="sprout"] .sg-card {
+  border-width: calc(7px * var(--sg)) calc(7px * var(--sg)) calc(9px * var(--sg));
+  border-image-source: url('/assets/sprout-garden/block-cream.png');
+  border-image-slice: 7 7 9 7 fill;
+  padding: 0.25rem 0.5rem;
+}
+
+/* ---------- Buttons ---------- */
+:root[data-theme="sprout"] .sg-button,
+:root[data-theme="sprout"] .sg-tab {
+  cursor: url('/assets/sprout-garden/catpaw-pointing-mouse-icon.png') 5 1, pointer;
+  font-weight: 700;
+  transition: filter 0.12s ease;
+}
+
+:root[data-theme="sprout"] .sg-button {
+  border-width: calc(6px * var(--sg)) calc(6px * var(--sg)) calc(8px * var(--sg));
+  border-image-source: url('/assets/sprout-garden/btn-wide.png');
+  border-image-slice: 6 6 8 6 fill;
+  padding: 0.35rem 0.75rem;
+}
+
+:root[data-theme="sprout"] .sg-button--secondary {
+  border-width: calc(7px * var(--sg)) calc(7px * var(--sg)) calc(9px * var(--sg));
+  border-image-source: url('/assets/sprout-garden/block-tan.png');
+  border-image-slice: 7 7 9 7 fill;
+}
+
+:root[data-theme="sprout"] .sg-button:hover:not(:disabled),
+:root[data-theme="sprout"] .sg-tab:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+/* Pressed art is 2px shorter at the bottom; pad it back so nothing jumps. */
+:root[data-theme="sprout"] .sg-button:active:not(:disabled) {
+  border-width: calc(6px * var(--sg));
+  border-image-source: url('/assets/sprout-garden/btn-wide-pressed.png');
+  border-image-slice: 6 fill;
+  padding-bottom: calc(0.35rem + 2px * var(--sg));
+}
+
+:root[data-theme="sprout"] .sg-button--secondary:active:not(:disabled) {
+  border-width: calc(7px * var(--sg));
+  border-image-source: url('/assets/sprout-garden/block-tan-pressed.png');
+  border-image-slice: 7 fill;
+  padding-bottom: calc(0.35rem + 2px * var(--sg));
+}
+
+:root[data-theme="sprout"] .sg-button:disabled {
+  border-image-source: url('/assets/sprout-garden/block-sage.png');
+  border-image-slice: 7 7 9 7 fill;
+  border-width: calc(7px * var(--sg)) calc(7px * var(--sg)) calc(9px * var(--sg));
+  color: var(--color-text-soft);
+  cursor: not-allowed;
+}
+
+/* ---------- Tabs (navigation and option groups) ---------- */
+:root[data-theme="sprout"] .sg-tab {
+  border-width: calc(7px * var(--sg)) calc(7px * var(--sg)) calc(9px * var(--sg));
+  border-image-source: url('/assets/sprout-garden/block-cream.png');
+  border-image-slice: 7 7 9 7 fill;
+  padding: 0 0.4rem;
+}
+
+:root[data-theme="sprout"] .sg-tab[aria-current="page"],
+:root[data-theme="sprout"] .sg-tab[aria-checked="true"],
+:root[data-theme="sprout"] .sg-tab[aria-pressed="true"] {
+  border-width: calc(7px * var(--sg));
+  border-image-source: url('/assets/sprout-garden/block-brown-pressed.png');
+  border-image-slice: 7 fill;
+  padding-bottom: calc(2px * var(--sg));
+}
+
+/* ---------- Game cells (Tic-Tac-Toe) ---------- */
+:root[data-theme="sprout"] .sg-cell {
+  border-width: calc(7px * var(--sg)) calc(7px * var(--sg)) calc(9px * var(--sg));
+  border-image-source: url('/assets/sprout-garden/block-cream.png');
+  border-image-slice: 7 7 9 7 fill;
+  cursor: url('/assets/sprout-garden/catpaw-pointing-mouse-icon.png') 5 1, pointer;
+  padding: 0;
+}
+
+:root[data-theme="sprout"] .sg-cell:hover:not(:disabled) {
+  border-image-source: url('/assets/sprout-garden/block-cream-flat.png');
+  border-image-slice: 7 fill;
+  border-width: calc(7px * var(--sg));
+  padding-bottom: calc(2px * var(--sg));
+}
+
+:root[data-theme="sprout"] .sg-cell:disabled {
+  border-image-source: url('/assets/sprout-garden/block-tan-flat.png');
+  border-image-slice: 7 fill;
+  border-width: calc(7px * var(--sg));
+  padding-bottom: calc(2px * var(--sg));
+  cursor: default;
+}
+
+:root[data-theme="sprout"] .sg-cell--win {
+  border-image-source: url('/assets/sprout-garden/block-sage-flat.png') !important;
+}
+
+/* ---------- Select, switches, bubble tail ---------- */
+:root[data-theme="sprout"] .sg-select {
+  background-color: #e8cfa6;
+  border: 4px solid #aa7959;
+  border-radius: 6px;
+  box-shadow: inset 0 2px 0 #f3e5c2, 0 3px 0 #90625f;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+:root[data-theme="sprout"] .sg-nav {
+  background-color: #dcb98a;
+  border-bottom: 4px solid #aa7959;
+  box-shadow: inset 0 -4px 0 #e8cfa6, 0 4px 0 rgb(63 42 28 / 0.25);
+}
+
+:root[data-theme="sprout"] .sg-switch-track {
+  display: inline-block;
+  position: relative;
+  width: calc(28px * var(--sg));
+  height: calc(14px * var(--sg));
+  background: url('/assets/sprout-garden/switch-off.png') no-repeat center / 100% 100%;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+:root[data-theme="sprout"] .sg-switch-knob {
+  position: absolute;
+  top: calc(-2px * var(--sg));
+  left: calc(-1px * var(--sg));
+  width: calc(18px * var(--sg));
+  height: calc(19px * var(--sg));
+  background: url('/assets/sprout-garden/knob-cream.png') no-repeat center / 100% 100%;
+  image-rendering: pixelated;
+  transition: left 0.12s steps(3);
+}
+
+:root[data-theme="sprout"] .sg-switch-input:checked + .sg-switch-track {
+  background-image: url('/assets/sprout-garden/switch-on.png');
+}
+
+:root[data-theme="sprout"] .sg-switch-input:checked + .sg-switch-track .sg-switch-knob {
+  left: calc(11px * var(--sg));
+  background-image: url('/assets/sprout-garden/knob-green.png');
+}
+
+:root[data-theme="sprout"] .sg-switch-input:focus-visible + .sg-switch-track {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+/* Pixel steps for the optional cat bob; disabled by the global reduced-motion rules. */
+@keyframes sg-cat-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(calc(-2px * var(--sg))); }
+}
+
+:root[data-theme="sprout"] .sg-cat-bob:hover {
+  animation: sg-cat-bob 0.5s steps(2) 2;
+}

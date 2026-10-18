@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+/public/assets/sprouts-ui/
+/public/assets/sprout-garden/
+/public/assets/pixel-ui/
+.env.local
