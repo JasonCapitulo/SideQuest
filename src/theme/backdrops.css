@@ -1,0 +1,189 @@
+/*
+ * Animated theme backdrops (see ThemeBackdrop.jsx). Fixed behind content,
+ * transform/opacity animation only. With reduced motion on, every animation is
+ * removed and the scene stays as a calm still illustration.
+ */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+:root[data-reduced-motion="true"] .backdrop *,
+:root[data-reduced-motion="true"] .backdrop {
+  animation: none !important;
+}
+
+/* ---------- Lo-Fi Hideaway: rain + warm window ---------- */
+.bd-rain {
+  position: absolute;
+  top: -12vh;
+  width: 2px;
+  border-radius: 2px;
+  background: #8a7aa8;
+  transform: rotate(10deg);
+  animation: bd-rain-fall linear infinite;
+}
+
+@keyframes bd-rain-fall {
+  from { transform: translate3d(0, 0, 0) rotate(10deg); }
+  to { transform: translate3d(-14vh, 118vh, 0) rotate(10deg); }
+}
+
+.bd-window {
+  position: absolute;
+  top: 12%;
+  right: 1%;
+  width: clamp(60px, 7vw, 100px);
+  opacity: 0.6;
+}
+
+.bd-window-light {
+  animation: bd-glow 7s ease-in-out infinite alternate;
+}
+
+.bd-window-glow {
+  position: absolute;
+  top: 12%;
+  right: 1%;
+  width: clamp(60px, 7vw, 100px);
+  height: clamp(75px, 8.75vw, 125px);
+  border-radius: 12px;
+  box-shadow: 0 0 90px 40px rgb(246 193 119 / 0.4);
+  animation: bd-glow 7s ease-in-out infinite alternate;
+}
+
+@keyframes bd-glow {
+  from { opacity: 0.45; }
+  to { opacity: 1; }
+}
+
+/* ---------- Sprout Garden: swaying plants + drifting leaves ---------- */
+.bd-plant {
+  position: absolute;
+  bottom: -4px;
+  opacity: 0.85;
+}
+
+.bd-plant-sway {
+  transform-origin: 50% 100%;
+  animation: bd-sway 6s ease-in-out infinite alternate;
+}
+
+@keyframes bd-sway {
+  from { transform: rotate(-3.5deg); }
+  to { transform: rotate(3.5deg); }
+}
+
+.bd-leaf {
+  position: absolute;
+  top: -6vh;
+  opacity: 0.55;
+  animation: bd-leaf-drift linear infinite;
+}
+
+@keyframes bd-leaf-drift {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  33% { transform: translate3d(5vw, 36vh, 0) rotate(110deg); }
+  66% { transform: translate3d(-4vw, 72vh, 0) rotate(230deg); }
+  100% { transform: translate3d(4vw, 112vh, 0) rotate(350deg); }
+}
+
+/* ---------- Quiet Mode: zen scene (deliberately very slow) ---------- */
+.bd-zen {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 46vh;
+  min-height: 220px;
+  opacity: 0.9;
+}
+
+.bd-zen-sun {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bd-breathe 14s ease-in-out infinite;
+}
+
+@keyframes bd-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.bd-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bd-ripple 12s ease-out infinite;
+  opacity: 0;
+}
+
+.bd-ripple-2 { animation-delay: 4s; }
+.bd-ripple-3 { animation-delay: 8s; }
+
+@keyframes bd-ripple {
+  0% { transform: scale(0.35); opacity: 0.7; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* Still illustration when motion is reduced: show one soft ripple. */
+:root[data-reduced-motion="true"] .bd-ripple:first-child {
+  transform: scale(1.1);
+  opacity: 0.45;
+}
+
+/* ---------- Retro Arcade: drifting pixel shapes ---------- */
+.bd-pixel {
+  position: absolute;
+  opacity: 0.75;
+  animation: bd-pixel-drift linear infinite;
+}
+
+.bd-pixel-diamond {
+  rotate: 45deg;
+}
+
+@keyframes bd-pixel-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-24vw, -38vh, 0); }
+}
+
+/* ---------- Midnight Library: stars + moonlight ---------- */
+.bd-star {
+  position: absolute;
+  border-radius: 50%;
+  background: #e8e6f5;
+  opacity: 0.25;
+  animation: bd-twinkle ease-in-out infinite alternate;
+}
+
+@keyframes bd-twinkle {
+  from { opacity: 0.12; transform: scale(0.8); }
+  to { opacity: 0.95; transform: scale(1.35); }
+}
+
+.bd-moon {
+  position: absolute;
+  top: 7%;
+  right: 7%;
+  width: clamp(54px, 7vw, 84px);
+}
+
+.bd-moon-halo {
+  position: absolute;
+  top: calc(7% + 14px);
+  right: calc(7% + 12px);
+  width: clamp(36px, 5vw, 60px);
+  height: clamp(36px, 5vw, 60px);
+  border-radius: 50%;
+  box-shadow: 0 0 70px 30px rgb(243 227 163 / 0.28);
+  animation: bd-halo 9s ease-in-out infinite alternate;
+}
+
+@keyframes bd-halo {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}

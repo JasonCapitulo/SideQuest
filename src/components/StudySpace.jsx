@@ -22,82 +22,77 @@ const TIPS = [
   'Done beats perfect. Start messy.',
 ]
 
-/** Home hero: a small interactive study space plus the two main actions. */
-function StudySpace({ onQuickReset, onSkipToStudy }) {
-  const { theme } = useThemePreferences()
-  const [tipIndex, setTipIndex] = useState(0)
+/** Home hero: headline, one dominant action, and a compact themed scene. */
+function StudySpace({ onStart, onSkipToStudy, onBrowseArcade }) {
+  const { theme, lowStimulation } = useThemePreferences()
+  const [tipIndex, setTipIndex] = useState(() => Math.floor(Math.random() * TIPS.length))
   const [pats, setPats] = useState(0)
   const isSprout = theme === 'sprout'
   const Scene = SCENES[theme]
   const tip = TIPS[tipIndex]
+  const showScene = !lowStimulation && (isSprout || Scene)
 
-  const nextTip = () => setTipIndex((i) => (i + 1) % TIPS.length)
   const pat = () => {
-    nextTip()
+    setTipIndex((i) => (i + 1) % TIPS.length)
     setPats((n) => n + 1)
   }
 
-  const scenePane = isSprout ? (
-    <Panel variant="panel">
-      <SproutScene tip={tip} pats={pats} onPat={pat} />
-    </Panel>
-  ) : (
-    <div className="flex flex-col gap-3">
-      {Scene && (
-        <div className="pixel-corners overflow-hidden rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
-          <Scene />
-        </div>
-      )}
-      <p
-        role="status"
-        aria-live="polite"
-        className="rounded-xl border-2 border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-center text-sm font-semibold text-[var(--color-text)]"
-      >
-        {tip}
-      </p>
-      <Button variant="secondary" onClick={nextTip} className="self-center">
-        Another tip
-      </Button>
-    </div>
-  )
+  const linkClass =
+    'inline-flex min-h-11 items-center rounded-lg px-2 font-semibold text-[var(--color-text)] underline decoration-2 underline-offset-4 hover:text-[var(--color-primary-hover)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]'
 
   return (
     <section
       aria-labelledby="home-title"
-      className={`grid gap-6 md:grid-cols-2 md:items-center md:gap-10 ${
-        isSprout
-          ? ''
-          : theme === 'retro'
-            ? 'retro-panel bg-[var(--color-bg-alt)] p-4 sm:p-6'
-            : 'rounded-3xl border-2 border-[var(--color-border)] bg-[var(--color-bg-alt)] p-4 shadow-[var(--theme-shadow)] sm:p-6'
-      }`}
+      className={`grid items-center gap-8 md:gap-12 ${showScene ? 'md:grid-cols-2' : 'mx-auto max-w-xl text-center'}`}
     >
-      {scenePane}
-
-      <div className="flex flex-col items-center text-center md:items-start md:text-left">
-        <span className="inline-block rounded-full bg-[var(--color-accent)]/40 px-3 py-1 text-xs font-bold uppercase tracking-wide text-[var(--color-text)]">
+      <div className={`flex flex-col ${showScene ? 'items-center text-center md:items-start md:text-left' : 'items-center'}`}>
+        <p className="text-sm font-bold uppercase tracking-widest text-[var(--color-text-soft)]">
           Welcome back, adventurer
-        </span>
+        </p>
         <h1
           id="home-title"
-          className="font-heading mt-3 text-3xl font-extrabold leading-tight text-[var(--color-text)] sm:text-4xl"
+          className="font-heading mt-3 text-4xl font-extrabold leading-tight text-[var(--color-text)] sm:text-5xl"
         >
-          SideQuest
+          Small steps start here.
         </h1>
-        <p className="mt-2 max-w-sm text-[var(--color-text-soft)]">
-          Can&apos;t get started? Play a two-minute reset game, then turn your to-do list into small
-          quests.
+        <p className="mt-4 max-w-md text-lg text-[var(--color-text-soft)]">
+          Play a two-minute reset, then turn your to-do list into one small quest.
         </p>
 
-        <div className="mt-6 flex w-full flex-col gap-4 sm:w-auto">
-          <Button size="lg" onClick={onQuickReset}>
-            Play a Quick Reset
-          </Button>
-          <Button variant="secondary" onClick={onSkipToStudy}>
-            Skip to Study Quest
+        <div className="mt-8">
+          <Button size="lg" onClick={onStart}>
+            Start a SideQuest
           </Button>
         </div>
+        <div className="mt-3 flex flex-wrap justify-center gap-x-4 md:justify-start">
+          <button type="button" onClick={onSkipToStudy} className={linkClass}>
+            Skip to Study Quest
+          </button>
+          <button type="button" onClick={onBrowseArcade} className={linkClass}>
+            Browse the Arcade
+          </button>
+        </div>
       </div>
+
+      {showScene &&
+        (isSprout ? (
+          <Panel variant="panel">
+            <SproutScene tip={tip} pats={pats} onPat={pat} />
+          </Panel>
+        ) : (
+          <div className="flex flex-col gap-3">
+            <div
+              className={`overflow-hidden border-2 border-[var(--color-border)] bg-[var(--color-surface)] ${
+                theme === 'retro' ? 'pixel-corners' : 'rounded-2xl'
+              }`}
+            >
+              <Scene />
+            </div>
+            <p role="status" aria-live="polite" className="text-center text-sm text-[var(--color-text-soft)]">
+              {tip}
+            </p>
+          </div>
+        ))}
     </section>
   )
 }

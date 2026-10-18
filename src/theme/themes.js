@@ -7,25 +7,25 @@ export const THEMES = [
   {
     id: 'lofi',
     name: 'Lo-Fi Hideaway',
-    description: 'Dusty lavender and cream with warm lamp lighting.',
-    headingFont: 'DM Sans',
+    description: 'Deep plum and lilac with a warm lamp glow and soft rain.',
+    headingFont: 'Nunito',
     swatches: {
-      bg: '#f1e7ec',
-      surface: '#fffaf3',
-      primary: '#b08bb8',
-      accent: '#f0c9a0',
-      text: '#3d2f3a',
+      bg: '#39264F',
+      surface: '#604777',
+      primary: '#EAE0EF',
+      accent: '#F0C9A0',
+      text: '#FAF5FC',
     },
   },
   {
     id: 'quiet',
     name: 'Quiet Mode',
     description: 'Clean white, cream, and sage for distraction-free focus.',
-    headingFont: 'DM Sans',
+    headingFont: 'Atkinson Hyperlegible',
     swatches: {
       bg: '#ffffff',
       surface: '#ffffff',
-      primary: '#6b8f71',
+      primary: '#4f7356',
       accent: '#e4dcc3',
       text: '#1f2a1f',
     },
@@ -33,14 +33,14 @@ export const THEMES = [
   {
     id: 'sprout',
     name: 'Sprout Garden',
-    description: 'A cozy pixel-art garden built from hand-drawn wooden UI pieces.',
-    headingFont: 'Sprout Pixel',
+    description: 'Leafy greens and warm paper with swaying plants and drifting leaves.',
+    headingFont: 'Fraunces',
     swatches: {
-      bg: '#a9c779',
-      surface: '#dcb98a',
-      primary: '#6f8f3a',
-      accent: '#c0d470',
-      text: '#3f2a1c',
+      bg: '#dcefc4',
+      surface: '#f8f4e4',
+      primary: '#3f7d3a',
+      accent: '#f2c14e',
+      text: '#23361f',
     },
   },
   {
@@ -75,7 +75,7 @@ export const THEME_IDS = THEMES.map((t) => t.id)
 
 export const FONTS = [
   { id: 'theme', label: 'Match theme', description: "Uses each theme's own typeface" },
-  { id: 'nunito', label: 'Nunito', description: 'Rounded and cozy' },
+  { id: 'nunito', label: 'Nunito', description: 'Rounded and cozy (overrides body text)' },
   { id: 'atkinson', label: 'Atkinson Hyperlegible', description: 'Designed for maximum legibility' },
 ]
 
@@ -89,10 +89,22 @@ export const TEXT_SIZES = [
 
 export const TEXT_SIZE_IDS = TEXT_SIZES.map((s) => s.id)
 
+/** How many game rounds one "break" allows before SideQuest nudges toward studying. */
+export const ROUND_LIMITS = [
+  { id: '1', label: '1 round', value: 1 },
+  { id: '3', label: '3 rounds', value: 3 },
+  { id: '5', label: '5 rounds', value: 5 },
+  { id: 'none', label: 'No limit', value: Infinity },
+]
+
+export const ROUND_LIMIT_IDS = ROUND_LIMITS.map((r) => r.id)
+
 export const DEFAULT_PREFERENCES = {
   theme: 'lofi',
   font: 'theme',
   textSize: 'md',
   reducedMotion: false,
   highContrast: false,
+  lowStimulation: false,
+  roundLimit: '3',
 }

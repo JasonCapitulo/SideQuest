@@ -1,15 +1,15 @@
-import { Moon, Palette } from 'lucide-react'
+import { Palette } from 'lucide-react'
 import { useThemePreferences } from '../context/ThemeContext.jsx'
 import { THEMES } from '../theme/themes.js'
-import { CatSprite } from './Sprite.jsx'
+import Logo from './Logo.jsx'
 import TabButton from './TabButton.jsx'
 import ThemeIcon from './ThemeIcon.jsx'
 
 const NAV_ITEMS = [
-  { label: 'Home', icon: 'home' },
-  { label: 'Games', icon: 'games' },
-  { label: 'Study Quest', icon: 'quest' },
-  { label: 'Settings', icon: 'settings' },
+  { label: 'Home', page: 'Home', icon: 'home' },
+  { label: 'Arcade', page: 'Games', icon: 'games' },
+  { label: 'Study Quest', page: 'Study Quest', icon: 'quest' },
+  { label: 'Settings', page: 'Settings', icon: 'settings' },
 ]
 
 function Navigation({ current, onNavigate }) {
@@ -28,24 +28,24 @@ function Navigation({ current, onNavigate }) {
         <button
           type="button"
           onClick={() => onNavigate('Home')}
-          className="font-heading flex items-center gap-2 text-lg font-extrabold text-[var(--color-primary)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+          aria-label="SideQuest home"
+          className="rounded-xl focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]"
         >
-          {isSprout ? <CatSprite pose="idle" scale={1} /> : <Moon size={20} aria-hidden="true" />}
-          <span className={isSprout ? 'text-[var(--color-text)]' : ''}>SideQuest</span>
+          <Logo size="sm" />
         </button>
 
         <nav aria-label="Main">
           <ul className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-            {NAV_ITEMS.map(({ label, icon }) => {
-              const isActive = current === label
+            {NAV_ITEMS.map(({ label, page, icon }) => {
+              const isActive = current === page
               return (
                 <li key={label}>
                   <TabButton
                     selected={isActive}
-                    onClick={() => onNavigate(label)}
+                    onClick={() => onNavigate(page)}
                     aria-current={isActive ? 'page' : undefined}
                   >
-                    <ThemeIcon name={icon} size={16} tone={isActive ? 'white' : 'brown'} />
+                    <ThemeIcon name={icon} size={16}  />
                     {label}
                   </TabButton>
                 </li>
@@ -54,13 +54,13 @@ function Navigation({ current, onNavigate }) {
           </ul>
         </nav>
 
-        <label className="flex items-center gap-1.5 rounded-xl border-2 border-[var(--color-border)] px-2 py-1.5 text-sm text-[var(--color-text-soft)]">
+        <label className="flex min-h-11 items-center gap-1.5 rounded-xl border-2 border-[var(--color-border)] px-2 py-1.5 text-sm text-[var(--color-text)]">
           <Palette size={16} aria-hidden="true" />
           <span className="sr-only">Theme</span>
           <select
             value={theme}
             onChange={(e) => setTheme(e.target.value)}
-            className={`bg-transparent font-semibold text-[var(--color-text)] focus-visible:outline-none ${
+            className={`min-h-9 bg-transparent font-semibold text-[var(--color-text)] focus-visible:outline-none ${
               isSprout ? 'sg-select px-1' : ''
             }`}
           >

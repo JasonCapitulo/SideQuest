@@ -15,7 +15,7 @@ function Switch({ checked, onChange, label, hint }) {
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className={isSprout ? 'sg-switch-input sr-only' : 'h-4 w-4 accent-[var(--color-primary)]'}
+        className={isSprout ? 'sg-switch-input sr-only' : 'h-6 w-6 shrink-0 accent-[var(--color-primary)]'}
       />
       {isSprout && (
         <span className="sg-switch-track" aria-hidden="true">

@@ -6,7 +6,7 @@ export const MODES = {
   VS_COMPUTER: 'vs-computer',
 }
 
-export function useTicTacToe(mode = MODES.TWO_PLAYER, humanMark = 'X') {
+export function useTicTacToe(mode = MODES.TWO_PLAYER, humanMark = 'X', difficulty = 'easy') {
   const [board, setBoard] = useState(EMPTY_BOARD)
   const [currentTurn, setCurrentTurn] = useState('X')
   const [isComputerThinking, setIsComputerThinking] = useState(false)
@@ -41,12 +41,12 @@ export function useTicTacToe(mode = MODES.TWO_PLAYER, humanMark = 'X') {
     if (currentTurn !== computerMark) return
 
     setIsComputerThinking(true)
-    const move = getComputerMove(board, computerMark, humanMark, 'unbeatable')
+    const move = getComputerMove(board, computerMark, humanMark, difficulty)
     setIsComputerThinking(false)
     if (move !== null && !isGameOver(board)) {
       playMove(move)
     }
-  }, [mode, gameOver, currentTurn, computerMark, board, humanMark, playMove])
+  }, [mode, gameOver, currentTurn, computerMark, board, humanMark, difficulty, playMove])
 
   const restart = useCallback(() => {
     setBoard(EMPTY_BOARD)

@@ -1,27 +1,51 @@
-/** Game lineup shown on Home and Games. Only playable entries can be launched. */
+/**
+ * The Arcade lineup. Every entry here is implemented and playable; do not add a
+ * game until its component exists. `component` names are resolved in Games.jsx.
+ */
 export const GAMES = [
   {
-    id: 'study-buddy-duel',
+    id: 'tic-tac-toe',
     title: 'Study Buddy Duel',
     icon: 'games',
-    blurb: 'A friendly round of tic-tac-toe to warm up your focus.',
-    meta: '~2 min · 1–2 players',
-    playable: true,
+    blurb: 'Tic-tac-toe with a friend or a gentle computer opponent.',
+    meta: '1–2 players',
+    hue: '#5b84e0',
+    howTo: 'Take turns placing X and O. Three in a row wins.',
   },
   {
-    id: 'memory-sprouts',
-    title: 'Memory Sprouts',
-    icon: 'star',
-    blurb: 'Flip and match cards to wake up your working memory.',
-    meta: 'Coming soon',
-    playable: false,
-  },
-  {
-    id: 'breathing-garden',
-    title: 'Breathing Garden',
+    id: 'memory-garden',
+    title: 'Memory Garden',
     icon: 'reset',
-    blurb: 'Slow, guided breaths while a tiny garden grows.',
-    meta: 'Coming soon',
-    playable: false,
+    blurb: 'Match six pairs of plants. No timer.',
+    meta: 'Untimed',
+    hue: '#4fa564',
+    howTo: 'Flip two cards at a time and match all six plant pairs. No timer.',
+  },
+  {
+    id: 'whack-a-sprout',
+    title: 'Whack-a-Sprout',
+    icon: 'star',
+    blurb: 'Tap the sprout before it hides. Relaxed or timed.',
+    meta: 'Adjustable',
+    hue: '#e0883f',
+    howTo: 'Tap each sprout before it hides. Choose relaxed or timed.',
+  },
+  {
+    id: 'color-hop',
+    title: 'Color Hop',
+    icon: 'motion',
+    blurb: 'Match colour and shape to hop through 8 gates.',
+    meta: 'Untimed',
+    hue: '#a665d6',
+    howTo: 'Match the gate’s colour and shape to hop through all eight.',
+  },
+  {
+    id: 'fruit-flick',
+    title: 'Fruit Flick',
+    icon: 'trophy',
+    blurb: 'Swipe, tap or click to slice 12 fruits.',
+    meta: 'Keyboard option',
+    hue: '#d9546a',
+    howTo: 'Swipe, tap or press keys to slice 12 fruits. Keyboard works too.',
   },
 ]

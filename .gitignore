@@ -29,3 +29,7 @@ dist-ssr
 /public/assets/sprout-garden/
 /public/assets/pixel-ui/
 .env.local
+# Third-party reference art (license forbids redistribution) - kept out of public/ so it is never bundled
+/reference-assets/
+.vercel
+.env*
