@@ -1,2 +1,2 @@
 # SideQuest
-An tiny mini-game made for people with ADHD, Neurodivergency, and learning disabilities.
+A habits and accountability app made for people with ADHD, Neurodivergency, and learning disabilities.
