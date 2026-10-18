@@ -60,6 +60,14 @@ function StudyQuest({ arrivedFrom }) {
     requestQuest('initial', null)
   }
 
+  function handleStartOver() {
+  setTaskDescription('')
+  setQuest(null)
+  setError('')
+  setBarrier('overwhelmed')
+  setEnergy('low')
+}
+
   return (
     <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <h1 className="font-heading text-3xl font-extrabold text-[var(--color-text)]">Study Quest</h1>
@@ -134,7 +142,7 @@ function StudyQuest({ arrivedFrom }) {
             <Button variant="secondary" disabled={loading} onClick={() => requestQuest('still_stuck', quest)}>
               {loading ? 'Thinking…' : 'Still Stuck'}
             </Button>
-            <Button variant="secondary" disabled={loading} onClick={() => requestQuest('restart', null)}>
+            <Button variant="secondary" disabled={loading} onClick={handleStartOver}>
               Start Over
             </Button>
           </div>
