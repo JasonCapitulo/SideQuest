@@ -11,7 +11,7 @@
 export const FEEDBACK = { INITIAL: 'initial', STILL_STUCK: 'still_stuck', RESTART: 'restart' }
 
 const ENDPOINT = '/api/quest'
-const TIMEOUT_MS = 25000
+const TIMEOUT_MS = 60000
 // Statuses that mean "nothing is serving this route", as opposed to "the service failed".
 const UNAVAILABLE = new Set([404, 405, 501, 502, 503, 504])
 

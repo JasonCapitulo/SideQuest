@@ -31,3 +31,5 @@ dist-ssr
 .env.local
 # Third-party reference art (license forbids redistribution) - kept out of public/ so it is never bundled
 /reference-assets/
+.vercel
+.env*
