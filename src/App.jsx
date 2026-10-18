@@ -79,7 +79,7 @@ function AppShell() {
   const Page = PAGES[page] ?? Home
 
   return (
-    <div className="relative isolate flex min-h-screen flex-col bg-[var(--color-bg)] text-[var(--color-text)]">
+    <div className="relative isolate flex min-h-screen flex-col bg-[var(--color-bg)] pb-[calc(5rem+env(safe-area-inset-bottom))] text-[var(--color-text)] md:pb-0">
       <a href="#main" className="skip-link">
         Skip to main content
       </a>

@@ -51,7 +51,7 @@ function StudySpace({ onStart, onSkipToStudy, onBrowseArcade }) {
         </p>
         <h1
           id="home-title"
-          className="font-heading mt-3 text-4xl font-extrabold leading-tight text-[var(--color-text)] sm:text-5xl"
+          className="font-heading mt-3 max-w-full break-words text-3xl font-extrabold leading-tight text-[var(--color-text)] sm:text-5xl"
         >
           Small steps start here.
         </h1>
