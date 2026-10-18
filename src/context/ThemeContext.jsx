@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  DEFAULT_PREFERENCES,
+  FONT_IDS,
+  TEXT_SIZE_IDS,
+  THEME_IDS,
+} from '../theme/themes.js'
 
 const ThemeContext = createContext(null)
-
-const THEMES = ['lavender', 'sage', 'peach', 'midnight']
-const FONTS = ['nunito', 'atkinson']
-const SIZES = ['sm', 'md', 'lg']
 
 const STORAGE_KEY = 'sidequest-preferences'
 
@@ -20,10 +22,25 @@ function loadPreferences() {
 
 export function ThemeProvider({ children }) {
   const stored = loadPreferences()
-  const [theme, setTheme] = useState(THEMES.includes(stored.theme) ? stored.theme : 'lavender')
-  const [font, setFont] = useState(FONTS.includes(stored.font) ? stored.font : 'nunito')
-  const [textSize, setTextSize] = useState(SIZES.includes(stored.textSize) ? stored.textSize : 'md')
-  const [reducedMotion, setReducedMotion] = useState(Boolean(stored.reducedMotion))
+  const [theme, setTheme] = useState(
+    THEME_IDS.includes(stored.theme) ? stored.theme : DEFAULT_PREFERENCES.theme,
+  )
+  const [font, setFont] = useState(
+    FONT_IDS.includes(stored.font) ? stored.font : DEFAULT_PREFERENCES.font,
+  )
+  const [textSize, setTextSize] = useState(
+    TEXT_SIZE_IDS.includes(stored.textSize) ? stored.textSize : DEFAULT_PREFERENCES.textSize,
+  )
+  const [reducedMotion, setReducedMotion] = useState(
+    typeof stored.reducedMotion === 'boolean'
+      ? stored.reducedMotion
+      : DEFAULT_PREFERENCES.reducedMotion,
+  )
+  const [highContrast, setHighContrast] = useState(
+    typeof stored.highContrast === 'boolean'
+      ? stored.highContrast
+      : DEFAULT_PREFERENCES.highContrast,
+  )
 
   useEffect(() => {
     const root = document.documentElement
@@ -31,14 +48,15 @@ export function ThemeProvider({ children }) {
     root.setAttribute('data-font', font)
     root.setAttribute('data-text-size', textSize)
     root.setAttribute('data-reduced-motion', reducedMotion ? 'true' : 'false')
-  }, [theme, font, textSize, reducedMotion])
+    root.setAttribute('data-contrast', highContrast ? 'high' : 'normal')
+  }, [theme, font, textSize, reducedMotion, highContrast])
 
   useEffect(() => {
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ theme, font, textSize, reducedMotion }),
+      JSON.stringify({ theme, font, textSize, reducedMotion, highContrast }),
     )
-  }, [theme, font, textSize, reducedMotion])
+  }, [theme, font, textSize, reducedMotion, highContrast])
 
   const value = {
     theme,
@@ -49,9 +67,8 @@ export function ThemeProvider({ children }) {
     setTextSize,
     reducedMotion,
     setReducedMotion,
-    THEMES,
-    FONTS,
-    SIZES,
+    highContrast,
+    setHighContrast,
   }
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
