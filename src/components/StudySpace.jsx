@@ -64,23 +64,21 @@ function StudySpace({ onQuickReset, onSkipToStudy }) {
   return (
     <section
       aria-labelledby="home-title"
-      className={`grid gap-6 md:grid-cols-2 md:items-center md:gap-10 ${
+      className={`grid gap-4 md:grid-cols-2 md:items-center md:gap-8 ${
         isSprout
           ? ''
           : theme === 'retro'
-            ? 'retro-panel bg-[var(--color-bg-alt)] p-4 sm:p-6'
-            : 'rounded-3xl border-2 border-[var(--color-border)] bg-[var(--color-bg-alt)] p-4 shadow-[var(--theme-shadow)] sm:p-6'
+            ? 'retro-panel bg-[var(--color-bg-alt)] p-3 sm:p-5'
+            : 'rounded-3xl border-2 border-[var(--color-border)] bg-[var(--color-bg-alt)] p-4 shadow-[var(--theme-shadow)] sm:p-5'
       }`}
     >
-      {scenePane}
-
       <div className="flex flex-col items-center text-center md:items-start md:text-left">
         <span className="inline-block rounded-full bg-[var(--color-accent)]/40 px-3 py-1 text-xs font-bold uppercase tracking-wide text-[var(--color-text)]">
           Welcome back, adventurer
         </span>
         <h1
           id="home-title"
-          className="font-heading mt-3 text-3xl font-extrabold leading-tight text-[var(--color-text)] sm:text-4xl"
+          className="font-heading mt-2 text-3xl font-extrabold leading-tight text-[var(--color-text)]"
         >
           SideQuest
         </h1>
@@ -89,7 +87,7 @@ function StudySpace({ onQuickReset, onSkipToStudy }) {
           quests.
         </p>
 
-        <div className="mt-6 flex w-full flex-col gap-4 sm:w-auto">
+        <div className="mt-4 flex w-full flex-col gap-3 sm:w-auto">
           <Button size="lg" onClick={onQuickReset}>
             Play a Quick Reset
           </Button>
@@ -98,6 +96,8 @@ function StudySpace({ onQuickReset, onSkipToStudy }) {
           </Button>
         </div>
       </div>
+
+      {scenePane}
     </section>
   )
 }

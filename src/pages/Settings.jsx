@@ -3,7 +3,7 @@ import Switch from '../components/Switch.jsx'
 import TabButton from '../components/TabButton.jsx'
 import ThemePreviewCard from '../components/ThemePreviewCard.jsx'
 import { useThemePreferences } from '../context/ThemeContext.jsx'
-import { FONTS, TEXT_SIZES, THEMES } from '../theme/themes.js'
+import { FONTS, ROUND_LIMITS, TEXT_SIZES, THEMES } from '../theme/themes.js'
 
 function Settings() {
   const {
@@ -17,10 +17,14 @@ function Settings() {
     setReducedMotion,
     highContrast,
     setHighContrast,
+    lowStimulation,
+    setLowStimulation,
+    roundLimit,
+    setRoundLimit,
   } = useThemePreferences()
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <section className="mx-auto max-w-5xl px-4 py-5 sm:px-6">
       <h1 className="font-heading text-2xl font-extrabold text-[var(--color-text)] sm:text-3xl">
         Settings
       </h1>
@@ -28,9 +32,9 @@ function Settings() {
         Make SideQuest feel like yours. Your choices are saved automatically.
       </p>
 
-      <div className="mt-8 grid gap-6 sm:grid-cols-2">
-        <Panel title="Theme" icon="palette" variant="panel" className="sm:col-span-2">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Panel level={2} title="Theme" icon="palette" variant="panel" className="sm:col-span-2">
+          <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
             {THEMES.map((themeOption) => (
               <ThemePreviewCard
                 key={themeOption.id}
@@ -42,7 +46,7 @@ function Settings() {
           </div>
         </Panel>
 
-        <Panel title="Readable font" icon="type">
+        <Panel level={2} title="Readable font" icon="type">
           <div role="radiogroup" aria-label="Body text font" className="flex flex-col gap-2">
             {FONTS.map((fontOption) => (
               <TabButton
@@ -55,14 +59,14 @@ function Settings() {
               >
                 <span>
                   <span className="block">{fontOption.label}</span>
-                  <span className="block text-xs font-normal opacity-80">{fontOption.description}</span>
+                  <span className="block text-xs font-normal">{fontOption.description}</span>
                 </span>
               </TabButton>
             ))}
           </div>
         </Panel>
 
-        <Panel title="Text size" icon="size">
+        <Panel level={2} title="Text size" icon="size">
           <div role="radiogroup" aria-label="Text size" className="flex gap-2">
             {TEXT_SIZES.map((size) => (
               <TabButton
@@ -79,7 +83,35 @@ function Settings() {
           </div>
         </Panel>
 
-        <Panel title="Motion" icon="motion">
+        <Panel level={2} title="Calm and simple" icon="motion">
+          <Switch
+            checked={lowStimulation}
+            onChange={setLowStimulation}
+            label="Low-stimulation mode"
+            hint="Turns off animated backgrounds and all animation, and trims the home screen to the essentials."
+          />
+        </Panel>
+
+        <Panel level={2} title="Game breaks" icon="games">
+          <div role="radiogroup" aria-label="Game rounds per break" className="flex flex-wrap gap-2">
+            {ROUND_LIMITS.map((limit) => (
+              <TabButton
+                key={limit.id}
+                role="radio"
+                aria-checked={roundLimit === limit.id}
+                selected={roundLimit === limit.id}
+                onClick={() => setRoundLimit(limit.id)}
+              >
+                {limit.label}
+              </TabButton>
+            ))}
+          </div>
+          <p className="mt-2 text-sm text-[var(--color-text-soft)]">
+            How many rounds you can play before SideQuest suggests moving on to Study Quest.
+          </p>
+        </Panel>
+
+        <Panel level={2} title="Motion" icon="motion">
           <Switch
             checked={reducedMotion}
             onChange={setReducedMotion}
@@ -88,7 +120,7 @@ function Settings() {
           />
         </Panel>
 
-        <Panel title="Contrast" icon="contrast">
+        <Panel level={2} title="Contrast" icon="contrast">
           <Switch
             checked={highContrast}
             onChange={setHighContrast}

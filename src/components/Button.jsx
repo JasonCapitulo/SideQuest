@@ -1,11 +1,11 @@
 import { useThemePreferences } from '../context/ThemeContext.jsx'
 
 const FOCUS =
-  'focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]'
+  'focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]'
 
 function Button({ variant = 'primary', size = 'md', children, className = '', type = 'button', ...props }) {
   const { theme } = useThemePreferences()
-  const pad = size === 'lg' ? 'px-8 py-4 text-lg' : 'px-6 py-3'
+  const pad = size === 'lg' ? 'px-7 py-3 text-lg' : 'px-5 py-2.5'
   const base = `inline-flex items-center justify-center gap-2 font-bold ${FOCUS}`
 
   let styles
@@ -20,8 +20,8 @@ function Button({ variant = 'primary', size = 'md', children, className = '', ty
   } else {
     styles = `${pad} rounded-2xl transition-transform duration-150 active:translate-y-0.5 disabled:opacity-60 ${
       variant === 'primary'
-        ? 'bg-[var(--color-primary)] text-white shadow-[var(--theme-shadow)] hover:bg-[var(--color-primary-hover)]'
-        : 'border-2 border-[var(--color-secondary)] bg-[var(--color-surface)] text-[var(--color-text)] hover:bg-[var(--color-secondary)] hover:text-white'
+        ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)] shadow-[var(--theme-shadow)] hover:bg-[var(--color-primary-hover)]'
+        : 'border-2 border-[var(--color-secondary)] bg-[var(--color-surface)] text-[var(--color-text)] hover:bg-[var(--color-bg-alt)]'
     }`
   }
 

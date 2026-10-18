@@ -12,7 +12,7 @@ function ThemePreviewCard({ themeTheme, isActive, onSelect, compact = false }) {
       type="button"
       onClick={() => onSelect(id)}
       aria-pressed={isActive}
-      className={`flex flex-col text-left transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)] ${
+      className={`flex flex-col text-left transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] ${
         compact ? 'gap-2 p-2' : 'gap-3 p-3'
       } rounded-2xl border-[3px] ${
         isActive ? 'border-[var(--color-text)]' : 'border-[var(--color-border)]'

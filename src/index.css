@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./theme/sprout.css";
+@import "./theme/backdrops.css";
 
 :root {
   font-synthesis: none;
@@ -7,46 +8,50 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---------- Theme: Lo-Fi Hideaway (default) ---------- */
+/* ---------- Theme: Lo-Fi Hideaway (default): deep plum room ---------- */
 :root,
 :root[data-theme="lofi"] {
-  --color-bg: #f1e7ec;
-  --color-bg-alt: #f8f0e3;
-  --color-surface: #fffaf3;
-  --color-card: #fffaf3;
-  --color-game-surface: #f8f0e3;
-  --color-text: #3d2f3a;
-  --color-text-soft: #6e5a68;
-  --color-primary: #b08bb8;
-  --color-primary-hover: #9c76a6;
-  --color-secondary: #d9a66c;
-  --color-secondary-hover: #c6914f;
-  --color-accent: #f0c9a0;
-  --color-border: #e3cdd8;
-  --font-heading: 'DM Sans', var(--font-body, sans-serif);
+  --color-bg: #39264F;
+  --color-bg-alt: #2e1e40;
+  --color-surface: #604777;
+  --color-card: #604777;
+  --color-game-surface: #4a3563;
+  --color-text: #FAF5FC;
+  --color-text-soft: #EAE0EF;
+  --color-primary: #EAE0EF;
+  --color-primary-hover: #FFFFFF;
+  --color-on-primary: #39264F;
+  --color-secondary: #8F789F;
+  --color-secondary-hover: #A58FB4;
+  --color-accent: #F0C9A0;
+  --color-border: #B9A5C8;
+  --color-focus: #F0C9A0;
+  --font-heading: 'Nunito', system-ui, sans-serif;
   --theme-bg: var(--color-bg);
   --theme-surface: var(--color-surface);
   --theme-text: var(--color-text);
   --theme-accent: var(--color-accent);
-  --theme-font: 'Nunito', system-ui, sans-serif;
+  --theme-font: 'DM Sans', system-ui, sans-serif;
 }
 
 /* ---------- Theme: Quiet Mode ---------- */
 :root[data-theme="quiet"] {
   --color-bg: #ffffff;
-  --color-bg-alt: #faf7f0;
+  --color-bg-alt: #f7f5ee;
   --color-surface: #ffffff;
   --color-card: #ffffff;
   --color-game-surface: #faf7f0;
   --color-text: #1f2a1f;
-  --color-text-soft: #4d5a4d;
-  --color-primary: #6b8f71;
-  --color-primary-hover: #577a5d;
-  --color-secondary: #c9c2a8;
-  --color-secondary-hover: #b3ac92;
+  --color-text-soft: #44503f;
+  --color-primary: #4f7356;
+  --color-primary-hover: #3f5d45;
+  --color-on-primary: #ffffff;
+  --color-secondary: #8a8465;
+  --color-secondary-hover: #6f6a50;
   --color-accent: #e4dcc3;
-  --color-border: #dfe3da;
-  --font-heading: 'DM Sans', var(--font-body, sans-serif);
+  --color-border: #76836f;
+  --color-focus: #2f4f3a;
+  --font-heading: 'Atkinson Hyperlegible', system-ui, sans-serif;
   --theme-bg: var(--color-bg);
   --theme-surface: var(--color-surface);
   --theme-text: var(--color-text);
@@ -54,27 +59,29 @@
   --theme-font: 'Atkinson Hyperlegible', system-ui, sans-serif;
 }
 
-/* ---------- Theme: Sprout Garden (pixel-art wooden UI; see sprout.css) ---------- */
+/* ---------- Theme: Sprout Garden (original CSS/SVG garden; see sprout.css) ---------- */
 :root[data-theme="sprout"] {
-  --color-bg: #a9c779;
-  --color-bg-alt: #dcb98a;
-  --color-surface: #dcb98a;
-  --color-card: #e8cfa6;
-  --color-game-surface: #e8cfa6;
-  --color-text: #3f2a1c;
-  --color-text-soft: #5e4330;
-  --color-primary: #5f7f2c;
-  --color-primary-hover: #4d6a22;
-  --color-secondary: #aa7959;
-  --color-secondary-hover: #906248;
-  --color-accent: #c0d470;
-  --color-border: #aa7959;
-  --font-heading: 'Sprout Pixel', 'DM Sans', sans-serif;
+  --color-bg: #dcefc4;
+  --color-bg-alt: #cfe6b3;
+  --color-surface: #f8f4e4;
+  --color-card: #fffdf3;
+  --color-game-surface: #fffdf3;
+  --color-text: #23361f;
+  --color-text-soft: #3f5535;
+  --color-primary: #3f7d3a;
+  --color-primary-hover: #316a2d;
+  --color-on-primary: #ffffff;
+  --color-secondary: #a8742f;
+  --color-secondary-hover: #8d6026;
+  --color-accent: #f2c14e;
+  --color-border: #5f8a3c;
+  --color-focus: #23361f;
+  --font-heading: 'Fraunces', Georgia, serif;
   --theme-bg: var(--color-bg);
   --theme-surface: var(--color-surface);
   --theme-text: var(--color-text);
   --theme-accent: var(--color-accent);
-  --theme-font: 'DM Sans', system-ui, sans-serif;
+  --theme-font: 'Nunito', system-ui, sans-serif;
 }
 
 /* ---------- Theme: Retro Arcade ---------- */
@@ -85,19 +92,21 @@
   --color-card: #ffffff;
   --color-game-surface: #fff6e9;
   --color-text: #3a2a3d;
-  --color-text-soft: #7a5f73;
+  --color-text-soft: #6f5468;
   --color-primary: #ff9eb0;
   --color-primary-hover: #ff7f99;
+  --color-on-primary: #3a2a3d;
   --color-secondary: #9fe3c7;
   --color-secondary-hover: #7fd4b1;
   --color-accent: #ffd88a;
-  --color-border: #ffd0da;
-  --font-heading: 'Pixelify Sans', var(--font-body, sans-serif);
+  --color-border: #8a5c7a;
+  --color-focus: #3a2a3d;
+  --font-heading: 'Pixelify Sans', 'Nunito', sans-serif;
   --theme-bg: var(--color-bg);
   --theme-surface: var(--color-surface);
   --theme-text: var(--color-text);
   --theme-accent: var(--color-accent);
-  --theme-font: 'Pixelify Sans', var(--font-body, sans-serif);
+  --theme-font: 'Nunito', system-ui, sans-serif;
 }
 
 /* ---------- Theme: Midnight Library ---------- */
@@ -111,16 +120,18 @@
   --color-text-soft: #ada9cc;
   --color-primary: #5b6fb0;
   --color-primary-hover: #6f82c2;
+  --color-on-primary: #ffffff;
   --color-secondary: #c7a44a;
   --color-secondary-hover: #d4b562;
   --color-accent: #8d79c4;
-  --color-border: #30406b;
-  --font-heading: 'Fraunces', serif;
+  --color-border: #7186c0;
+  --color-focus: #c7a44a;
+  --font-heading: 'Fraunces', Georgia, serif;
   --theme-bg: var(--color-bg);
   --theme-surface: var(--color-surface);
   --theme-text: var(--color-text);
   --theme-accent: var(--color-accent);
-  --theme-font: 'Fraunces', 'DM Sans', serif;
+  --theme-font: 'DM Sans', system-ui, sans-serif;
 }
 
 /* ---------- Accessibility font (body text only — never decorative) ---------- */
@@ -175,8 +186,42 @@ h3,
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  padding: 0.6rem 1rem;
+  border-radius: 0.6rem;
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Low-stimulation mode: no scenery, no motion, flat surfaces. */
+:root[data-low-stim="true"] .backdrop {
+  display: none;
+}
+
+:root[data-low-stim="true"] *,
+:root[data-low-stim="true"] *::before,
+:root[data-low-stim="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+:root[data-low-stim="true"] {
+  --theme-shadow: none;
 }
 
 :root[data-reduced-motion="true"] *,

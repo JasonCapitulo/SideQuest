@@ -1,7 +1,7 @@
 import { useThemePreferences } from '../context/ThemeContext.jsx'
 
 const FOCUS =
-  'focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]'
+  'focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]'
 
 /**
  * Selectable button used for navigation tabs and option groups. Pass
@@ -20,12 +20,12 @@ function TabButton({ selected, children, className = '', ...props }) {
           } text-[var(--color-text)]`
         : `rounded-xl px-3 py-2 text-sm font-semibold transition-colors ${
             selected
-              ? 'bg-[var(--color-primary)] text-white'
+              ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
               : 'border-2 border-[var(--color-border)] text-[var(--color-text-soft)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text)]'
           }`
 
   return (
-    <button type="button" className={`inline-flex items-center justify-center gap-1.5 ${FOCUS} ${look} ${className}`} {...props}>
+    <button type="button" className={`inline-flex min-h-11 items-center justify-center gap-1.5 ${FOCUS} ${look} ${className}`} {...props}>
       {children}
     </button>
   )
