@@ -1,15 +1,139 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  font-family: system-ui, 'Segoe UI', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+
+  /* lavender (default) */
+  --color-bg: #f3effc;
+  --color-bg-alt: #fdfaf6;
+  --color-surface: #ffffff;
+  --color-text: #3a2e4d;
+  --color-text-soft: #6b5e80;
+  --color-primary: #a78bd8;
+  --color-primary-hover: #9271c9;
+  --color-secondary: #8fb89e;
+  --color-secondary-hover: #76a386;
+  --color-accent: #f5c6a5;
+  --color-border: #ddd0f2;
+}
+
+:root[data-theme="sage"] {
+  --color-bg: #eef5ec;
+  --color-bg-alt: #fdfaf6;
+  --color-surface: #ffffff;
+  --color-text: #2f3b2f;
+  --color-text-soft: #5c6b5c;
+  --color-primary: #8fb89e;
+  --color-primary-hover: #76a386;
+  --color-secondary: #a78bd8;
+  --color-secondary-hover: #9271c9;
+  --color-accent: #f5c6a5;
+  --color-border: #cfe3cf;
+}
+
+:root[data-theme="peach"] {
+  --color-bg: #fdf0e4;
+  --color-bg-alt: #fffaf3;
+  --color-surface: #ffffff;
+  --color-text: #4a3326;
+  --color-text-soft: #7d6652;
+  --color-primary: #f0a978;
+  --color-primary-hover: #e8925a;
+  --color-secondary: #8fb89e;
+  --color-secondary-hover: #76a386;
+  --color-accent: #a78bd8;
+  --color-border: #f6ddc2;
+}
+
+:root[data-theme="midnight"] {
+  --color-bg: #1b1a2b;
+  --color-bg-alt: #232237;
+  --color-surface: #2b2a42;
+  --color-text: #ece8fb;
+  --color-text-soft: #b3abd4;
+  --color-primary: #b79cf0;
+  --color-primary-hover: #c9b3fa;
+  --color-secondary: #7fc29a;
+  --color-secondary-hover: #96d1ad;
+  --color-accent: #f5c6a5;
+  --color-border: #3b3a58;
+}
+
+:root[data-font="nunito"] {
+  --font-body: 'Nunito', system-ui, sans-serif;
+}
+
+:root[data-font="atkinson"] {
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+}
+
+:root[data-text-size="sm"] {
+  --font-scale: 0.925;
+}
+:root[data-text-size="md"] {
+  --font-scale: 1;
+}
+:root[data-text-size="lg"] {
+  --font-scale: 1.15;
+}
+
+html {
+  font-size: calc(16px * var(--font-scale, 1));
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  font-family: var(--font-body, 'Nunito', system-ui, sans-serif);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:root[data-reduced-motion="true"] *,
+:root[data-reduced-motion="true"] *::before,
+:root[data-reduced-motion="true"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-reduced-motion="false"]) *,
+  :root:not([data-reduced-motion="false"]) *::before,
+  :root:not([data-reduced-motion="false"]) *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes float-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.float-bob {
+  animation: float-bob 3s ease-in-out infinite;
+}
+
+.pixel-border {
+  box-shadow:
+    0 0 0 2px var(--color-border),
+    0 0 0 4px var(--color-surface),
+    0 6px 0 0 var(--color-border);
+}
+
+.pixel-corners {
+  clip-path: polygon(
+    0 8px, 8px 8px, 8px 0,
+    calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
+    8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)
+  );
 }
