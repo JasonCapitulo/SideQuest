@@ -1,0 +1,458 @@
+# SideQuest
+### An AI-powered, gamified study activation tool for neurodivergent students
+
+**Hackathon:** Technica 2026  
+**Primary target:** Best Use of Gemini API  
+**Team:** 2 developers  
+**Goal:** Build a polished, functional MVP within the remaining hackathon time.
+
+---
+
+## 1. The Problem We're Solving
+
+Most productivity and habit-tracking apps assume that once someone knows what they need to do, they can simply start doing it.
+
+For many students with ADHD, autism, learning disabilities, or executive-function challenges, that isn't necessarily true.
+
+Students may struggle with:
+
+- **Task initiation:** Knowing an assignment needs to be completed but feeling unable to begin.
+- **Task paralysis:** Becoming overwhelmed by the size, complexity, or uncertainty of an assignment.
+- **Transitions:** Struggling to switch from relaxing, gaming, or scrolling to studying.
+- **Time blindness:** Underestimating how long tasks or breaks take.
+- **Dopamine-seeking distractions:** Turning to social media or endless games for stimulation, then struggling to disengage.
+- **Recovery:** Feeling discouraged after procrastinating or losing focus, making it even harder to restart.
+
+Existing productivity apps often require users to manually create tasks, organize schedules, navigate dashboards, and maintain streaks.
+
+**Our insight: Sometimes the last thing an overwhelmed student needs is another productivity app to manage.**
+
+We want to reduce the effort required to start studying rather than add more steps.
+
+## 2. Our Solution
+
+SideQuest is a cozy, game-inspired web application that helps students transition into studying through short, intentional microgames and AI-generated next steps.
+
+**Our concept: Play your way into focus.**
+
+Instead of opening an app and managing a long to-do list, students can immediately start a short game designed to provide a predictable, low-pressure transition into their next activity.
+
+Once the game ends, Google's Gemini API helps the student identify one small, achievable action to begin or resume studying.
+
+The goal isn't to keep students playing.
+
+**The goal is to make leaving the game and returning to real life feel achievable and rewarding.**
+
+### Core product principles
+
+1. **Low friction:** Minimal setup, few decisions, and no mandatory account creation.
+2. **Finite gameplay:** Games have a clear endpoint rather than infinite replay loops.
+3. **Adaptive support:** AI adjusts suggested actions based on the student's situation.
+4. **No guilt-based motivation:** No broken-streak punishment or shame for struggling.
+5. **Accessibility:** Predictable interactions, reduced-motion options, readable text, and minimal sensory overload.
+6. **Real-world progress:** The ultimate reward is beginning or returning to an actual study task.
+
+---
+
+## 3. How SideQuest Works
+
+### Step 1: Open SideQuest
+
+The user sees a cozy, visually appealing interface with one prominent button:
+
+**"Start a quick reset"**
+
+There is no requirement to enter assignments, set up a schedule, or navigate a complicated dashboard.
+
+### Step 2: Play a short microgame
+
+The user plays a simple game lasting approximately 30–90 seconds.
+
+Example: **The Color Garden**
+
+- A small garden contains several flowers.
+- The user finds or matches a few flowers.
+- Each correct selection gives subtle visual feedback.
+- After completing the objective, the game ends.
+- The user receives a small reward, such as XP or a collectible star.
+
+The game is intentionally finite, with no endless level progression.
+
+### Step 3: Transition into studying
+
+After the game, SideQuest asks:
+
+**"What are you trying to work on?"**
+
+The student can enter a short sentence:
+
+"I have a programming assignment due tomorrow, but I don't understand pointers."
+
+The app sends this context to Gemini.
+
+Gemini generates an achievable first action:
+
+"Open your assignment and identify the first question involving pointers. You don't need to solve it yet."
+
+The student can then start that action.
+
+### Step 4: Adapt when the student gets stuck
+
+After the initial action, the student can choose:
+
+- **I started!** — Continue to a slightly larger action.
+- **I'm still stuck** — Generate an easier or different starting point.
+- **I need a break** — Offer a short reset and an easy way to return.
+
+Gemini adjusts its response rather than repeating the same advice.
+
+This is the feature that makes SideQuest more than a basic game with a chatbot.
+
+---
+
+## 4. Main Features
+
+### Feature A: Microgames
+
+Short, self-contained activities intended to make the transition into studying feel less abrupt.
+
+Possible games:
+
+**The Color Garden:** Match flowers or colors in a cozy garden.
+
+**The Bookshelf:** Sort books into matching categories or shelves.
+
+**The Bridge Builder:** Complete a tiny pattern puzzle to build a bridge.
+
+For the MVP, we only need **one fully functional game**.
+
+The others can be future concepts.
+
+### Feature B: AI Study Reentry
+
+Gemini generates personalized next steps based on:
+
+- What the student needs to study
+- Why they're struggling
+- Their current energy level, if provided
+- Whether previous suggestions worked
+
+Examples:
+
+**Student:** "I need to write an essay, but I don't know where to begin."
+
+**Gemini:** "Open the assignment instructions and highlight the main question you're being asked to answer."
+
+**Student:** "I have no motivation to study calculus."
+
+**Gemini:** "Open your notes and find one example you've already completed successfully."
+
+The system should prioritize specific, achievable actions rather than generic motivational statements.
+
+### Feature C: Adaptive Difficulty
+
+If a student cannot complete a suggested action, the app offers a smaller or alternative action.
+
+For example:
+
+Original quest: "Solve one practice problem."
+
+Student selects: "I'm still stuck."
+
+New quest: "Find one practice problem and identify what information is given."
+
+This creates an adaptive system that responds to difficulty instead of treating incomplete tasks as failure.
+
+### Feature D: Guilt-Free Gamification
+
+Students receive small rewards for meaningful progress.
+
+Potential mechanics:
+
+- XP for completing an activation game
+- XP for attempting a real-world study action
+- Collectible stars or decorative items
+- A character or environment that gradually develops
+- Positive reinforcement for restarting after interruptions
+
+**Important:** The game should not punish missed days, demand daily engagement, or encourage endless play.
+
+### Feature E: Recovery Mode
+
+If the student becomes distracted or struggles to return, they can select:
+
+**"Help me restart."**
+
+Gemini offers a manageable reentry action without judgment.
+
+Example:
+
+"You don't need to make up for the last hour. Open your notes and find where you left off."
+
+This is particularly relevant for students who experience executive-function difficulties.
+
+---
+
+## 5. User Interface and Visual Direction
+
+We want SideQuest to feel like a cozy indie game, not a corporate productivity dashboard.
+
+### Visual style
+
+- Pixel-art-inspired illustrations
+- Lavender, sage green, cream, and soft blue
+- Cozy study rooms, gardens, and magical environments
+- Small animated characters
+- Rounded panels and readable typography
+- Gentle, optional animations
+- Minimal text on each screen
+
+### MVP Screens
+
+**Screen 1 — Welcome**
+
+A cozy game environment with a prominent "Start a quick reset" button.
+
+**Screen 2 — Microgame**
+
+One functional matching game with simple instructions and a visible completion goal.
+
+**Screen 3 — Study Transition**
+
+A text input asking what the student wants to study.
+
+**Screen 4 — AI-Generated Quest**
+
+Displays Gemini's suggested action, with buttons to start or request an easier action.
+
+**Screen 5 — Progress / Reward**
+
+Shows a small XP reward and provides an option to continue studying or restart later.
+
+We should focus on making these screens polished and functional rather than building a large dashboard.
+
+---
+
+## 6. How We're Using Gemini
+
+Gemini is the core AI component of SideQuest.
+
+It isn't just a chatbot. It acts as an **adaptive study transition assistant**.
+
+### Gemini's responsibilities
+
+**Task interpretation:** Understand what the student is trying to accomplish.
+
+**Barrier identification:** Interpret whether the student is overwhelmed, confused, unmotivated, or struggling to begin, without making medical diagnoses.
+
+**Quest generation:** Produce a small, concrete action the student can realistically start.
+
+**Adaptive support:** Adjust the action when the student reports being stuck.
+
+**Recovery assistance:** Help students restart after interruptions.
+
+### Example API response
+
+```json
+{
+  "barrier": "task_overwhelm",
+  "questTitle": "Find Your Starting Point",
+  "questDescription": "Open your programming assignment and identify the first question about pointers.",
+  "estimatedMinutes": 2,
+  "xpReward": 10,
+  "encouragement": "You don't need to solve anything yet. Just find your starting point."
+}
+```
+
+For the MVP, one Gemini-powered quest-generation endpoint is sufficient.
+
+We do not need to implement a complex multi-agent architecture.
+
+A future version could use separate planning, coaching, and scheduling agents, but that is outside tonight's scope.
+
+---
+
+## 7. Recommended Technology Stack
+
+We want to minimize backend complexity because both developers are still building technical experience.
+
+| Technology | Purpose |
+|---|---|
+| React + Vite | Frontend application |
+| Tailwind CSS | Styling and responsive design |
+| JavaScript | Game mechanics and UI logic |
+| Google Gemini API | Personalized study quests |
+| Vercel Serverless Functions | Small, secure backend endpoint |
+| localStorage | Save basic progress without a database |
+| Claude Code / Cursor | AI-assisted implementation |
+| GitHub | Version control and collaboration |
+| Vercel | Deployment |
+
+**Why this stack?**
+
+We can build most of the application on the frontend.
+
+The only backend functionality we need is a small serverless endpoint that securely communicates with Gemini.
+
+We should never expose the Gemini API key directly in frontend code.
+
+For development, use a local serverless function or equivalent Node endpoint. Deploy the frontend and API together.
+
+---
+
+## 8. Minimum Viable Product
+
+The complete MVP should demonstrate this user journey:
+
+1. Student opens SideQuest.
+2. Student starts and completes one short game.
+3. Student enters what they're struggling to study.
+4. Gemini generates a personalized action.
+5. Student reports whether they could start.
+6. If stuck, Gemini generates an easier action.
+7. Student receives a small reward for progress.
+
+**This is our definition of a successful build.**
+
+Everything else is optional.
+
+### Must-have features
+
+- Polished landing page
+- One working microgame
+- Gemini API integration
+- AI-generated study action
+- "I'm still stuck" adaptive response
+- Simple XP or reward system
+- Working deployed application
+
+### Nice-to-have features
+
+- A second microgame
+- Character customization
+- Study timer
+- Sound effects
+- Animated progress indicators
+- Persistent progress across sessions
+
+### Do not build tonight
+
+- Full calendar integration
+- Canvas integration
+- Notion integration
+- Authentication
+- Complex database
+- Multiple autonomous AI agents
+- Multiplayer features
+- Advanced analytics
+- Mobile-native app
+
+These could be part of our future vision, but they would put the hackathon MVP at risk.
+
+---
+
+## 9. Team Responsibilities
+
+### Developer 1 — Frontend and Game Experience
+
+Responsible for:
+
+- Designing the visual interface
+- Building the landing page
+- Implementing the microgame
+- Creating the quest and reward screens
+- Styling the application
+- Ensuring the interface is intuitive and accessible
+
+### Developer 2 — AI Integration and Application Logic
+
+Responsible for:
+
+- Setting up the Gemini API
+- Creating the serverless API endpoint
+- Designing the quest-generation prompt
+- Handling Gemini's JSON responses
+- Implementing the adaptive "I'm still stuck" logic
+- Saving basic user progress
+- Supporting deployment and testing
+
+**Both developers should collaborate on integration, debugging, and the final demo.**
+
+We should get the frontend and Gemini communicating as early as possible.
+
+---
+
+## 10. What Makes SideQuest Different?
+
+Many existing productivity tools focus on planning, tracking, or rewarding completed tasks.
+
+SideQuest focuses on **the transition between wanting to do something and actually beginning it**.
+
+Our differentiators are:
+
+**Low-friction entry:** Students don't need to maintain a complicated productivity system.
+
+**Intentional gameplay:** Games are designed with clear endpoints rather than maximizing screen time.
+
+**AI personalization:** The next step changes based on the student's actual situation.
+
+**Adaptive recovery:** Getting stuck doesn't end the experience; the system adjusts.
+
+**Neurodivergent-centered design:** The interface accounts for common executive-function barriers without assuming every neurodivergent student has the same needs.
+
+We're not claiming that playing a microgame clinically improves attention or treats ADHD. Our hypothesis is that short, predictable activities combined with personalized next steps can make study transitions feel more approachable.
+
+---
+
+## 11. Hackathon Demo
+
+Our demo should tell one simple story.
+
+**Scenario:** A college student has a programming assignment due tomorrow. They know they need to start but feel overwhelmed.
+
+1. They open SideQuest instead of scrolling through social media.
+2. They complete a short, visually satisfying microgame.
+3. They enter: "I need to work on my CS assignment, but I don't understand pointers."
+4. Gemini generates a small first action.
+5. They select "I'm still stuck."
+6. Gemini makes the task easier and more specific.
+7. The student starts their task and receives a small reward.
+
+This demonstrates the game, the AI integration, and the adaptive functionality in one continuous flow.
+
+### Our pitch
+
+"Most productivity apps help students organize what they need to do. But for students with executive-function challenges, knowing what to do isn't always enough. Starting is the hard part.
+
+SideQuest transforms the transition into studying into a short, intentional game experience. Once the game ends, Gemini generates a personalized first step and adapts if the student is still stuck.
+
+Unlike endless games or productivity apps that demand constant management, SideQuest is designed to help students leave the screen and begin their real work."
+
+---
+
+## 12. Long-Term Vision
+
+If we continued developing SideQuest after Technica, we could add:
+
+- Canvas and Notion integration to understand upcoming assignments
+- Google Calendar integration for identifying available study windows
+- AI-based prioritization of deadlines and workload
+- Personalized estimates for task completion
+- Browser extension for one-click access
+- Optional voice-based interaction
+- More microgames for different transition needs
+- Personalized insights into which approaches students find helpful
+- AI-assisted study session planning
+- Optional accountability and body-doubling features
+
+However, **our hackathon product should remain focused on one core problem: helping students start and return to studying.**
+
+## Final Product Vision
+
+**SideQuest is not another habit tracker.**
+
+It's an adaptive study activation experience that combines finite, intentional gameplay with Gemini-powered executive-function support.
+
+Our central design philosophy:
+
+**The best reward isn't keeping someone in the game. It's helping them feel ready to leave it.**
