@@ -11,7 +11,7 @@ function SoundControls() {
   }
 
   return (
-    <section aria-labelledby="sound-heading" className="flex flex-wrap items-center gap-x-4 gap-y-2">
+    <section aria-labelledby="sound-heading" className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
       <h2 id="sound-heading" className="text-sm font-bold text-[var(--color-text)]">
         Sound
       </h2>
