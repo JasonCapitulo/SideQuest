@@ -4,7 +4,7 @@ import Button from './Button.jsx'
 
 /** Sound is OFF until the user turns it on. Mute, play/pause and volume are all real controls. */
 function SoundControls() {
-  const { supported, muted, volume, ambientOn, toggleMute, setVolume, toggleAmbient } = useSound()
+  const { supported, muted, lowStimulation, volume, ambientOn, toggleMute, setVolume, toggleAmbient } = useSound()
 
   if (!supported) {
     return <p className="text-sm text-[var(--color-text-soft)]">Sound isn&apos;t available in this browser.</p>
@@ -16,12 +16,12 @@ function SoundControls() {
         Sound
       </h2>
 
-      <Button variant="secondary" onClick={toggleMute} className="!px-3 !py-2 text-sm">
+      <Button variant="secondary" onClick={toggleMute} disabled={lowStimulation} className="!px-3 !py-2 text-sm">
         {muted ? <VolumeX size={18} aria-hidden="true" /> : <Volume2 size={18} aria-hidden="true" />}
         {muted ? 'Muted — unmute' : 'Sound on — mute'}
       </Button>
 
-      <Button variant="secondary" onClick={toggleAmbient} className="!px-3 !py-2 text-sm">
+      <Button variant="secondary" onClick={toggleAmbient} disabled={lowStimulation} className="!px-3 !py-2 text-sm">
         {ambientOn ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
         {ambientOn ? 'Pause background sound' : 'Play background sound'}
       </Button>
@@ -35,12 +35,18 @@ function SoundControls() {
           step="5"
           value={Math.round(volume * 100)}
           onChange={(e) => setVolume(Number(e.target.value) / 100)}
+          disabled={lowStimulation}
           aria-valuetext={`${Math.round(volume * 100)} percent`}
           className="h-6 w-28 accent-[var(--color-primary)]"
         />
       </label>
 
-      {ambientOn && muted && (
+      {lowStimulation && (
+        <p role="status" className="text-sm text-[var(--color-text-soft)]">
+          Sound is off while low-stimulation mode is on.
+        </p>
+      )}
+      {!lowStimulation && ambientOn && muted && (
         <p role="status" className="text-sm text-[var(--color-text-soft)]">
           Background sound is playing but muted.
         </p>

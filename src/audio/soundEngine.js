@@ -109,19 +109,35 @@ export function startAmbient(theme) {
   const nodes = []
   let interval = null
 
-  if (theme === 'lofi' || theme === 'sprout') {
-    // rain / breeze: band-passed noise
+  if (theme === 'lofi') {
+    // soft rain: band-passed noise
     const n = noiseSource()
     const f = ctx.createBiquadFilter()
     f.type = 'bandpass'
-    f.frequency.value = theme === 'lofi' ? 1400 : 650
+    f.frequency.value = 1400
     f.Q.value = 0.4
     const g = ctx.createGain()
-    g.gain.value = theme === 'lofi' ? 0.22 : 0.16
+    g.gain.value = 0.22
     n.connect(f).connect(g).connect(out)
     n.start()
     nodes.push(n)
-    if (theme === 'sprout') nodes.push(slowLfo(g.gain, 0.12, 0.07))
+  } else if (theme === 'sprout') {
+    // gentle garden chimes: sparse pentatonic sine notes, no noise (never rain)
+    const notes = [523.25, 587.33, 659.25, 783.99, 880]
+    interval = setInterval(() => {
+      if (!ctx || ctx.state !== 'running') return
+      const t = ctx.currentTime
+      const o = ctx.createOscillator()
+      const g = ctx.createGain()
+      o.type = 'sine'
+      o.frequency.value = notes[Math.floor(Math.random() * notes.length)]
+      g.gain.setValueAtTime(0.0001, t)
+      g.gain.exponentialRampToValueAtTime(0.06, t + 0.05)
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 2.2)
+      o.connect(g).connect(out)
+      o.start(t)
+      o.stop(t + 2.3)
+    }, 1800)
   } else if (theme === 'quiet' || theme === 'midnight') {
     const base = theme === 'quiet' ? [130.8, 196] : [98, 147, 196.5]
     base.forEach((hz, i) => {

@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { parseSpotifyUrl } from '../features/spotify/spotifyUrl.js'
 import { useThemePreferences } from '../context/ThemeContext.jsx'
 import {
   ensureContext,
@@ -26,20 +27,42 @@ function load() {
   }
 }
 
+const SPOTIFY_KEY = 'sidequest-spotify-item'
+
+function loadSpotify() {
+  try {
+    return parseSpotifyUrl(sessionStorage.getItem(SPOTIFY_KEY))
+  } catch {
+    return null
+  }
+}
+
 export function SoundProvider({ children }) {
-  const { theme } = useThemePreferences()
-  const [{ muted, volume }, setPrefs] = useState(load)
+  const { theme, lowStimulation } = useThemePreferences()
+  const [{ muted: mutedPref, volume }, setPrefs] = useState(load)
+  // Low-stimulation mode silences everything immediately, without losing the saved mute choice.
+  const muted = mutedPref || lowStimulation
   // Never persisted and never true on load: ambient only starts from a button press.
-  const [ambientOn, setAmbientOn] = useState(false)
+  const [ambientRequested, setAmbientOn] = useState(false)
+  // Optional Spotify embed. Only one music source plays at a time: choosing Spotify stops SideQuest's own ambient
+  // sound, and closing the player never restarts it. Link only (no credentials); kept for this tab.
+  const [spotify, setSpotify] = useState(loadSpotify)
+  const ambientOn = ambientRequested && !lowStimulation
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ muted, volume }))
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ muted: mutedPref, volume }))
     } catch {
       /* storage unavailable: preferences just won't persist */
     }
     setMasterLevel(muted, volume)
-  }, [muted, volume])
+  }, [mutedPref, muted, volume])
+
+  // Turning low-stimulation on cancels any background sound; it never resumes on its own afterwards.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (lowStimulation) setAmbientOn(false)
+  }, [lowStimulation])
 
   // One ambient bed at a time; restart it when the theme changes.
   useEffect(() => {
@@ -56,20 +79,38 @@ export function SoundProvider({ children }) {
   }, [])
 
   const toggleMute = useCallback(() => {
+    if (lowStimulation) return
     ensureContext()
     setPrefs((p) => ({ ...p, muted: !p.muted }))
-  }, [])
+  }, [lowStimulation])
 
   const setVolume = useCallback((v) => {
     ensureContext()
     setPrefs((p) => ({ ...p, volume: v }))
   }, [])
 
+  useEffect(() => {
+    try {
+      if (spotify) sessionStorage.setItem(SPOTIFY_KEY, spotify.openUrl)
+      else sessionStorage.removeItem(SPOTIFY_KEY)
+    } catch {
+      /* in-memory only */
+    }
+  }, [spotify])
+
   const toggleAmbient = useCallback(() => {
+    if (lowStimulation) return
     ensureContext()
     setMasterLevel(muted, volume)
+    if (!ambientOn) setSpotify(null) // switching to SideQuest music removes the Spotify player
     setAmbientOn((on) => !on)
-  }, [muted, volume])
+  }, [muted, volume, lowStimulation, ambientOn])
+
+  const playSpotify = useCallback((item) => {
+    setAmbientOn(false) // pause theme music immediately
+    setSpotify(item)
+  }, [])
+  const closeSpotify = useCallback(() => setSpotify(null), []) // deliberately leaves theme music off
 
   const sfx = useCallback(
     (name) => {
@@ -81,8 +122,8 @@ export function SoundProvider({ children }) {
   )
 
   const value = useMemo(
-    () => ({ supported: isSupported(), muted, volume, ambientOn, toggleMute, setVolume, toggleAmbient, sfx }),
-    [muted, volume, ambientOn, toggleMute, setVolume, toggleAmbient, sfx],
+    () => ({ supported: isSupported(), muted, lowStimulation, volume, ambientOn, toggleMute, setVolume, toggleAmbient, sfx, spotify, playSpotify, closeSpotify }),
+    [muted, lowStimulation, volume, ambientOn, toggleMute, setVolume, toggleAmbient, sfx, spotify, playSpotify, closeSpotify],
   )
 
   return <SoundContext.Provider value={value}>{children}</SoundContext.Provider>

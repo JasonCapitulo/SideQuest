@@ -1,4 +1,8 @@
+import RetroChase from './RetroChase.jsx'
+import { useThemePreferences } from '../../context/ThemeContext.jsx'
+
 function RetroScene() {
+  const { prefersReducedMotion } = useThemePreferences()
   return (
     <div
       role="img"
@@ -26,6 +30,8 @@ function RetroScene() {
         <rect x="36" y="82" width="16" height="16" fill="var(--color-accent)" />
         <rect x="68" y="82" width="16" height="16" fill="var(--color-accent)" />
       </svg>
+
+      <RetroChase enabled={!prefersReducedMotion} />
 
       {/* Chunky CSS dialog box in place of an image asset. */}
       <div

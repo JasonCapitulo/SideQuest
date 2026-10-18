@@ -54,16 +54,16 @@ function Games({ onNavigate, initialGame = null }) {
   }
 
   return (
-    <section aria-labelledby="arcade-title" className="mx-auto max-w-5xl px-4 py-4 sm:px-6">
+    <section aria-labelledby="arcade-title" className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       <h1
         id="arcade-title"
         ref={arcadeHeadingRef}
         tabIndex={-1}
-        className="font-heading text-2xl font-extrabold text-[var(--color-text)] focus:outline-none sm:text-3xl"
+        className="font-heading text-center text-3xl font-extrabold text-[var(--color-text)] focus:outline-none"
       >
         Arcade
       </h1>
-      <p className="mt-1 text-[var(--color-text-soft)]">
+      <p className="mx-auto mt-2 max-w-xl text-center text-[var(--color-text-soft)]">
         Short games to help you shift gears. Each round is finite, then it&apos;s on to Study Quest.
       </p>
 
@@ -91,9 +91,9 @@ function Games({ onNavigate, initialGame = null }) {
           />
         </div>
       ) : (
-        <ul className="mt-3 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mx-auto mt-8 grid max-w-4xl list-none grid-cols-1 justify-center gap-4 p-0 sm:grid-cols-2 lg:grid-cols-6">
           {GAMES.map((game) => (
-            <li key={game.id} className="flex">
+            <li key={game.id} className="flex lg:col-span-2 lg:[&:nth-child(4)]:col-start-2">
               <GameCard game={game} level={2} disabled={breakOver} onPlay={open} />
             </li>
           ))}

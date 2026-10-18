@@ -6,6 +6,8 @@ import Panel from './components/Panel.jsx'
 import SoundControls from './components/SoundControls.jsx'
 import Switch from './components/Switch.jsx'
 import ThemeBackdrop from './components/ThemeBackdrop.jsx'
+import { QuestStateProvider } from './context/QuestStateContext.jsx'
+import SpotifyPlayer from './features/spotify/SpotifyPlayer.jsx'
 import { ThemeProvider, useThemePreferences } from './context/ThemeContext.jsx'
 import Games from './pages/Games.jsx'
 import Home from './pages/Home.jsx'
@@ -90,6 +92,8 @@ function AppShell() {
         </div>
       </main>
 
+      <SpotifyPlayer />
+
       <footer className="relative z-10 mt-6 border-t-2 border-[var(--color-border)] bg-[var(--color-bg-alt)]">
         <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-3 sm:px-6">
           <SoundControls />
@@ -97,7 +101,7 @@ function AppShell() {
             checked={lowStimulation}
             onChange={setLowStimulation}
             label="Low-stimulation mode"
-            hint="Hides animated backgrounds and animations, and simplifies the home screen."
+            hint="Mutes all sound, pauses music, and turns off animated backgrounds and animations."
           />
           <p className="text-xs text-[var(--color-text-soft)]">
             Sound is off until you turn it on. Imported calendar data stays in this browser tab.
@@ -126,7 +130,9 @@ function App() {
   return (
     <ThemeProvider>
       <SoundProvider>
-        <AppShell />
+        <QuestStateProvider>
+          <AppShell />
+        </QuestStateProvider>
       </SoundProvider>
     </ThemeProvider>
   )

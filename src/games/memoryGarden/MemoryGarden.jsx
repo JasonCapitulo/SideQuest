@@ -1,16 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
-import { Cherry, Clover, Flower2, Leaf, Sprout, TreePine } from 'lucide-react'
+import { Bug, Check, Droplets, Flower2, Leaf, Sprout, Sun } from 'lucide-react'
 import { useSound } from '../../audio/SoundContext.jsx'
+import { getBest, recordLowest } from '../bestScores.js'
 import GameResult from '../shared/GameResult.jsx'
 import GameShell from '../shared/GameShell.jsx'
 
+// Card art lives in public/games/memoryPNGS (square images, white background). Each pair uses
+// the same file twice; if one fails to load, the card falls back to its icon.
 const PLANTS = [
-  { id: 'sprout', name: 'Sprout', Icon: Sprout },
-  { id: 'flower', name: 'Flower', Icon: Flower2 },
-  { id: 'leaf', name: 'Leaf', Icon: Leaf },
-  { id: 'tree', name: 'Pine tree', Icon: TreePine },
-  { id: 'clover', name: 'Clover', Icon: Clover },
-  { id: 'cherry', name: 'Cherries', Icon: Cherry },
+  { id: 'seedling', name: 'Seedling', Icon: Sprout, src: '/games/memoryPNGS/seedling.png' },
+  { id: 'flowering-pot', name: 'Flowering pot', Icon: Flower2, src: '/games/memoryPNGS/floweringpot.png' },
+  { id: 'mushroom', name: 'Mushroom', Icon: Leaf, src: '/games/memoryPNGS/mushroom.png' },
+  { id: 'sunflower', name: 'Sunflower', Icon: Sun, src: '/games/memoryPNGS/sunflower.png' },
+  { id: 'ladybug', name: 'Ladybug', Icon: Bug, src: '/games/memoryPNGS/ladybug.png' },
+  { id: 'watering-can', name: 'Watering can', Icon: Droplets, src: '/games/memoryPNGS/wateringcan.png' },
 ]
 
 function newDeck() {
@@ -28,6 +31,8 @@ function MemoryGarden({ headingRef, canReplay, roundsPlayed, limit, onRoundCompl
   const [faceUp, setFaceUp] = useState([]) // keys currently turned over (max 2)
   const [matched, setMatched] = useState([]) // plant ids found
   const [moves, setMoves] = useState(0)
+  const [failed, setFailed] = useState([]) // plant ids whose image did not load
+  const [best, setBest] = useState(() => getBest('memory-garden'))
   const [message, setMessage] = useState('Turn over any card to begin.')
   const lockRef = useRef(false)
   const timerRef = useRef(null)
@@ -52,6 +57,8 @@ function MemoryGarden({ headingRef, canReplay, roundsPlayed, limit, onRoundCompl
       setFaceUp([])
       sfx('correct')
       if (found.length === PLANTS.length) {
+        recordLowest('memory-garden', moves + 1)
+        setBest(getBest('memory-garden'))
         setMessage('You found every pair!')
         sfx('win')
         onRoundComplete()
@@ -95,12 +102,14 @@ function MemoryGarden({ headingRef, canReplay, roundsPlayed, limit, onRoundCompl
       </p>
       <p className="mb-3 text-sm text-[var(--color-text-soft)]">
         Moves: {moves} · Pairs found: {matched.length} of {PLANTS.length}
+        {best !== null && ` · Best: ${best} moves`}
       </p>
 
-      <div role="group" aria-label="Memory cards" className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+      <div role="group" aria-label="Memory cards" className="mx-auto grid max-w-md grid-cols-3 gap-3 sm:grid-cols-4 sm:max-w-lg">
         {deck.map((card, i) => {
           const shown = faceUp.includes(card.key) || matched.includes(card.id)
           const isMatched = matched.includes(card.id)
+          const useImage = !failed.includes(card.id)
           return (
             <button
               key={card.key}
@@ -108,21 +117,33 @@ function MemoryGarden({ headingRef, canReplay, roundsPlayed, limit, onRoundCompl
               onClick={() => flip(card)}
               aria-disabled={isMatched}
               aria-label={shown ? `${card.name}, card ${i + 1}${isMatched ? ', matched' : ''}` : `Card ${i + 1}, face down`}
-              className={`flex min-h-20 flex-col items-center justify-center gap-1 rounded-xl border-2 p-2 text-sm font-bold focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] ${
+              className={`relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border-2 p-1.5 transition-colors focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] ${
                 shown
-                  ? 'border-[var(--color-primary)] bg-[var(--color-card)] text-[var(--color-text)]'
-                  : 'border-[var(--color-border)] bg-[var(--color-game-surface)] text-[var(--color-text-soft)]'
-              } ${isMatched ? 'border-dashed' : ''}`}
+                  ? `bg-white text-[#23361f] ${isMatched ? 'border-[var(--color-primary)] ring-2 ring-[var(--color-primary)]' : 'border-[var(--color-border)]'}`
+                  : 'mg-back border-[var(--color-border)] text-[var(--color-text)]'
+              }`}
             >
               {shown ? (
                 <>
-                  <card.Icon size={28} aria-hidden="true" />
-                  <span>{card.name}</span>
+                  {useImage ? (
+                    <img
+                      src={card.src}
+                      alt=""
+                      draggable="false"
+                      onError={() => setFailed((f) => (f.includes(card.id) ? f : [...f, card.id]))}
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <card.Icon size={36} aria-hidden="true" />
+                  )}
+                  {isMatched && (
+                    <span className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary)]">
+                      <Check size={14} strokeWidth={3} aria-hidden="true" />
+                    </span>
+                  )}
                 </>
               ) : (
-                <span aria-hidden="true" className="text-2xl">
-                  ?
-                </span>
+                <Sprout size={28} aria-hidden="true" className="opacity-70" />
               )}
             </button>
           )

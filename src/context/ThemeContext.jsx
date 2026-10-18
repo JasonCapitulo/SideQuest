@@ -72,10 +72,14 @@ export function ThemeProvider({ children }) {
   }, [theme, font, textSize, reducedMotion, highContrast, lowStimulation])
 
   useEffect(() => {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ theme, font, textSize, reducedMotion, highContrast, lowStimulation, roundLimit }),
-    )
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ theme, font, textSize, reducedMotion, highContrast, lowStimulation, roundLimit }),
+      )
+    } catch {
+      /* storage unavailable: preferences just won't persist */
+    }
   }, [theme, font, textSize, reducedMotion, highContrast, lowStimulation, roundLimit])
 
   const value = {

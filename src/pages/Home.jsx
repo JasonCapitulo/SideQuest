@@ -1,52 +1,53 @@
-import GameCard from '../components/GameCard.jsx'
+import { useState } from 'react'
+import StartPrompt from '../components/StartPrompt.jsx'
 import StudySpace from '../components/StudySpace.jsx'
-import ThemePreviewCard from '../components/ThemePreviewCard.jsx'
-import { useThemePreferences } from '../context/ThemeContext.jsx'
-import { GAMES } from '../games/catalog.js'
-import { THEMES } from '../theme/themes.js'
+import { useQuestState } from '../context/QuestStateContext.jsx'
 
+const CHOICE_KEY = 'sidequest-start-choice'
+
+function readChoice() {
+  try {
+    return sessionStorage.getItem(CHOICE_KEY) === 'skip'
+  } catch {
+    return false
+  }
+}
+
+/** Home: one headline, one dominant action, light secondary navigation. */
 function Home({ onNavigate }) {
-  const { theme, setTheme, lowStimulation } = useThemePreferences()
+  const { imported } = useQuestState()
+  const [prompting, setPrompting] = useState(false)
+  const [skipped, setSkipped] = useState(readChoice)
+
+  function start() {
+    if (imported || skipped) onNavigate('Games')
+    else setPrompting(true)
+  }
+
+  function continueWithout() {
+    try {
+      sessionStorage.setItem(CHOICE_KEY, 'skip') // remembered for this browser tab only
+    } catch {
+      /* in-memory only */
+    }
+    setSkipped(true)
+    setPrompting(false)
+    onNavigate('Study Quest')
+  }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 px-4 py-4 sm:px-6">
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
       <StudySpace
-        onQuickReset={() => onNavigate('Games')}
+        onStart={start}
         onSkipToStudy={() => onNavigate('Study Quest')}
+        onBrowseArcade={() => onNavigate('Games')}
       />
-
-      {!lowStimulation && (
-        <>
-          <section aria-labelledby="home-games">
-            <h2 id="home-games" className="font-heading mb-2 text-xl font-extrabold text-[var(--color-text)]">
-              Pick a game
-            </h2>
-            <ul className="grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
-              {GAMES.map((game) => (
-                <li key={game.id} className="flex">
-                  <GameCard game={game} onPlay={(id) => onNavigate('Games', { game: id })} />
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section aria-labelledby="home-themes">
-            <h2 id="home-themes" className="font-heading mb-2 text-xl font-extrabold text-[var(--color-text)]">
-              Pick your vibe
-            </h2>
-            <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-              {THEMES.map((option) => (
-                <ThemePreviewCard
-                  key={option.id}
-                  compact
-                  themeTheme={option}
-                  isActive={theme === option.id}
-                  onSelect={setTheme}
-                />
-              ))}
-            </div>
-          </section>
-        </>
+      {prompting && (
+        <StartPrompt
+          onImport={() => onNavigate('Study Quest', { from: 'import' })}
+          onContinue={continueWithout}
+          onDismiss={() => setPrompting(false)}
+        />
       )}
     </div>
   )

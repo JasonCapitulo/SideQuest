@@ -38,6 +38,7 @@ function cleanContext(description) {
 }
 
 export function parseIcs(text, { now = new Date(), source = 'canvas-ics-file' } = {}) {
+  const isCanvas = source === 'canvas-ics-file'
   if (!text || !text.trim()) throw new ImportError('That file is empty, so there is nothing to import.')
 
   let root
@@ -101,8 +102,10 @@ export function parseIcs(text, { now = new Date(), source = 'canvas-ics-file' } 
       course,
       dueAt: iso,
       allDay: Boolean(startTime.isDate),
-      // Canvas marks real assignments with an "event-assignment-…" UID. Anything else is just a calendar event.
-      kind: /assignment/i.test(ev.uid) ? 'assignment' : 'event',
+      // Only a Canvas file can vouch for assignments (its "event-assignment-…" UIDs). Everything else is an event.
+      kind: isCanvas && /^event-assignment-/i.test(ev.uid) ? 'assignment' : 'event',
+      // The zone the file used: an IANA name, 'UTC', or null for floating times and all-day dates.
+      tzid: startTime.isDate ? null : startTime.zone?.tzid && startTime.zone.tzid !== 'floating' ? startTime.zone.tzid : null,
       source,
       estimatedMinutes: null,
       context: cleanContext(summaryItem.description),
